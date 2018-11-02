@@ -66,6 +66,8 @@ def GetExtent(ds, row, col):
 
 def main():
     metadata = {}
+    ds_geo = gdal.Warp('', input_file, dstSRS='EPSG:4326', format='VRT')
+
     ds = gdal.Open(input_file)
 
     num_band = ds.RasterCount
@@ -90,8 +92,8 @@ def main():
     px_width = geotransform[1]
     px_height = geotransform[5]
 
-    # Generate bbox
-    bbox = GetExtent(ds, row, col)
+    # Generate bbox in latitude and longitude only
+    bbox = GetExtent(ds_geo, row, col)
 
     # Getting time information
     try:
